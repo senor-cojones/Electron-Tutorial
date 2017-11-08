@@ -3,14 +3,12 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const path = require("path");
 const url = require("url");
-
-// Module to access the Menu API
 const Menu = electron.Menu;
-//Get the "productName" from package.json
 const name = electron.app.getName();
+// Module to access the Tray API
+const Tray = electron.Tray;
 
 let mainWindow;
-//Seup the menu template
 let menuTemplate = [
     {
         label: name,
@@ -53,6 +51,20 @@ let menuTemplate = [
         ]
     }
 ];
+//Create tray menu template
+let trayTemplate = [
+    {
+        label: `About ${name}`,
+        role: "about"
+    }, {
+        type: "separator"
+    }, {
+        label: "Quit",
+        click: function () {
+            app.quit();
+        }
+    }
+];
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -60,10 +72,17 @@ function createWindow() {
         height: 600
     });
 
-    //Build the menu from the menuTemplate
+    //Setup the tray and use an icon
+    const tray = new Tray(path.join("app", "skeleton.png"));
+    //Build the menu for the tray
+    const trayMenu = Menu.buildFromTemplate(trayTemplate);
     const menu = Menu.buildFromTemplate(menuTemplate);
 
-    //Set the menu to be used for the main window
+    //Add a tooltip to the tray
+    tray.setToolTip("Electron Skeleton");
+    //Attach the menu to the tray
+    tray.setContextMenu(trayMenu);
+
     Menu.setApplicationMenu(menu);
 
     mainWindow.loadURL(url.format({
