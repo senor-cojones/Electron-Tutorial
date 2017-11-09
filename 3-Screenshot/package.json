@@ -1,0 +1,21 @@
+{
+    "name": "electron-skeleton-app",
+    "productName": "Skeleton",
+    "version": "1.0.0",
+    "description": "An introduction to Electron with an app skeleton",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "repository": "https://github.com/senor-cojones/Electron-Skeleton-App",
+    "keywords": [
+        "Electron",
+        "introduction",
+        "tutorial",
+        "skeleton"
+    ],
+    "author": "senor-cojones",
+    "devDependencies": {
+        "electron": "~1.7.8"
+    }
+}
