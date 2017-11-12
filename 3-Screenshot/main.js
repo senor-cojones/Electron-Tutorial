@@ -8,6 +8,10 @@ const name = electron.app.getName();
 const Tray = electron.Tray;
 //Setup a global keyboard shortcut
 const globalShortcut = electron.globalShortcut;
+//Setup the Electron shell to allow shell commands
+const shell = electron.shell;
+//Setup screenshot folder path
+const screenshotPath = path.join(__dirname, "saved_screenshots");
 
 let mainWindow;
 let menuTemplate = [
@@ -31,8 +35,17 @@ let menuTemplate = [
                 app.quit();
             }
         }]
-    },
-    {
+    }, {
+        label: "View",
+        submenu: [
+            {
+                label: "Saved Directory",
+                click: function () {
+                    shell.openItem(screenshotPath);
+                }
+            }
+        ]
+    }, {
         label: "Tools",
         submenu: [
             {
@@ -72,7 +85,7 @@ function createWindow() {
         height: 600
     });
 
-    const tray = new Tray(path.join("app", "skeleton.png"));
+    const tray = new Tray(path.join("app", "icon.png"));
     const trayMenu = Menu.buildFromTemplate(trayTemplate);
     const menu = Menu.buildFromTemplate(menuTemplate);
 
@@ -93,7 +106,7 @@ function createWindow() {
 
     //Setup and register the global keyboard shortcut
     globalShortcut.register("CmdOrCtrl+D", () => {
-        mainWindow.webContents.send("capture", __dirname + "/saved_screenshots");
+        mainWindow.webContents.send("capture", screenshotPath);
     });
 }
 
