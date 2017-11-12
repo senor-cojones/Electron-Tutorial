@@ -28,7 +28,7 @@ let menuTemplate = [
         }, {
             label: "Quit",
             accelerator: "CmdOrCtrl+Q",
-            click: function () {
+            click: () => {
                 app.quit();
             }
         }]
@@ -37,7 +37,7 @@ let menuTemplate = [
         submenu: [
             {
                 label: "Saved Directory",
-                click: function () {
+                click: () => {
                     shell.openItem(screenshotPath);
                 }
             }
@@ -70,7 +70,7 @@ let trayTemplate = [
         type: "separator"
     }, {
         label: "Quit",
-        click: function () {
+        click: () => {
             app.quit();
         }
     }
@@ -80,10 +80,11 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        frame: false //Disable the default application frame
+        frame: false
     });
 
-    const tray = new Tray(path.join("app", "icon.png"));
+    let iconPath = path.join(__dirname, "app/icon.png");
+    const tray = new Tray(iconPath);
     const trayMenu = Menu.buildFromTemplate(trayTemplate);
     const menu = Menu.buildFromTemplate(menuTemplate);
 

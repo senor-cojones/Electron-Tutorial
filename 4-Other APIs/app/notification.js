@@ -1,5 +1,5 @@
-var path = require("path");
-var notificationOptions = [
+const path = require("path");
+const notificationOptions = [
     {
         title: "Skeleton Notification",
         body: "Hello from the Skeleton App!",
@@ -8,7 +8,7 @@ var notificationOptions = [
 ];
 
 function fireNotification() {
-    new Notification(options[0].title, options[0]);
+    new Notification(notificationOptions[0].title, notificationOptions[0]);
 }
 
 document.addEventListener("DOMContentLoaded", function () {

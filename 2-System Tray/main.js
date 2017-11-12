@@ -26,7 +26,7 @@ let menuTemplate = [
         }, {
             label: "Quit",
             accelerator: "CmdOrCtrl+Q",
-            click: function () {
+            click: () => {
                 app.quit();
             }
         }]
@@ -60,7 +60,7 @@ let trayTemplate = [
         type: "separator"
     }, {
         label: "Quit",
-        click: function () {
+        click: () => {
             app.quit();
         }
     }
@@ -72,8 +72,10 @@ function createWindow() {
         height: 600
     });
 
-    //Setup the tray and use an icon
-    const tray = new Tray(path.join("app", "icon.png"));
+    //Setup the tray icon
+    let iconPath = path.join(__dirname, "app/icon.png");
+    //Setup the tray and the icon
+    const tray = new Tray(iconPath);
     //Build the menu for the tray
     const trayMenu = Menu.buildFromTemplate(trayTemplate);
     const menu = Menu.buildFromTemplate(menuTemplate);

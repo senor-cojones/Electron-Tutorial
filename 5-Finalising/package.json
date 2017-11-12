@@ -5,6 +5,8 @@
     "description": "An introduction to Electron with an app skeleton",
     "main": "main.js",
     "scripts": {
+        "_build": "rimraf Skeleton-* && electron-packager . --platform=win32 --arch=x64 --icon=app",
+        "build": "rimraf Skeleton-* && electron-packager . --platform=darwin --arch=x64 --icon=app",
         "start": "electron ."
     },
     "repository": "https://github.com/senor-cojones/Electron-Skeleton-App",
@@ -16,6 +18,8 @@
     ],
     "author": "senor-cojones",
     "devDependencies": {
-        "electron": "~1.7.8"
+        "electron": "~1.7.8",
+        "electron-packager": "^9.1.0",
+        "rimraf": "^2.6.2"
     }
 }

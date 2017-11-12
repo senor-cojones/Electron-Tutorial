@@ -28,7 +28,7 @@ let menuTemplate = [
         }, {
             label: "Quit",
             accelerator: "CmdOrCtrl+Q",
-            click: function () {
+            click: () => {
                 app.quit();
             }
         }]
