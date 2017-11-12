@@ -42,3 +42,8 @@ h1 {
     right: 10px;
     -webkit-app-region: no-drag;
 }
+
+.appNotify {
+    margin: 0 auto;
+    display: block;
+}
