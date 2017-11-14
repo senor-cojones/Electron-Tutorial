@@ -11,16 +11,13 @@ const Tray = electron.Tray;
 let mainWindow;
 let menuTemplate = [
     {
-        label: name,
+        label: "File",
         submenu: [{
             label: "Open",
             accelerator: "CmdOrCtrl+O",
             click: () => {
                 electron.dialog.showOpenDialog({ properties: ["openFile", "openDirectory", "multiSelections"] });
             }
-        }, {
-            label: `About ${name}`,
-            role: "about"
         }, {
             type: "separator"
         }, {
@@ -30,20 +27,18 @@ let menuTemplate = [
                 app.quit();
             }
         }]
-    },
-    {
+    }, {
         label: "Tools",
         submenu: [
             {
                 label: "Open Dev Tools",
-                accelerator: "CmdOrCtrl+A",
+                accelerator: "CmdOrCtrl+F",
                 click: () => {
                     mainWindow.openDevTools();
                 }
-            },
-            {
+            }, {
                 label: "Close Dev Tools",
-                accelerator: "CmdOrCtrl+B",
+                accelerator: "CmdOrCtrl+G",
                 click: () => {
                     mainWindow.closeDevTools();
                 }
@@ -54,17 +49,39 @@ let menuTemplate = [
 //Create tray menu template
 let trayTemplate = [
     {
-        label: `About ${name}`,
-        role: "about"
-    }, {
-        type: "separator"
-    }, {
         label: "Quit",
         click: () => {
             app.quit();
         }
     }
 ];
+
+//If the platform is darwin (Mac) the add a custom Tray and utilise the about fnctionality
+if (process.platform === "darwin") {
+    menuTemplate.unshift({
+        label: app.getName(),
+        submenu: [
+            {
+                label: `About ${name}`,
+                role: "about"
+            }, {
+                type: "separator"
+            }, {
+                role: "hide"
+            }, {
+                role: "hideothers"
+            }, {
+                role: "unhide"
+            }
+        ]
+    });
+    trayTemplate.unshift({
+        label: `About ${name}`,
+        role: "about"
+    }, {
+        type: "separator"
+    });
+}
 
 function createWindow() {
     mainWindow = new BrowserWindow({

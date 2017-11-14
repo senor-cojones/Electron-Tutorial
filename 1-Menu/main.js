@@ -13,16 +13,13 @@ let mainWindow;
 //Seup the menu template
 let menuTemplate = [
     {
-        label: name,
+        label: "File",
         submenu: [{
             label: "Open",
             accelerator: "CmdOrCtrl+O",
             click: () => {
                 electron.dialog.showOpenDialog({ properties: ["openFile", "openDirectory", "multiSelections"] });
             }
-        }, {
-            label: `About ${name}`,
-            role: "about"
         }, {
             type: "separator"
         }, {
@@ -38,14 +35,14 @@ let menuTemplate = [
         submenu: [
             {
                 label: "Open Dev Tools",
-                accelerator: "CmdOrCtrl+A",
+                accelerator: "CmdOrCtrl+F",
                 click: () => {
                     mainWindow.openDevTools();
                 }
             },
             {
                 label: "Close Dev Tools",
-                accelerator: "CmdOrCtrl+B",
+                accelerator: "CmdOrCtrl+G",
                 click: () => {
                     mainWindow.closeDevTools();
                 }
@@ -53,6 +50,23 @@ let menuTemplate = [
         ]
     }
 ];
+
+//If the platform is darwin (Mac) the add a custom Menu and utilise the about fnctionality
+if (process.platform === "darwin") {
+    menuTemplate.unshift({
+        label: app.getName(),
+        submenu: [
+            {
+                label: `About ${name}`,
+                role: "about"
+            },
+            { type: "separator" },
+            { role: "hide" },
+            { role: "hideothers" },
+            { role: "unhide" }
+        ]
+    });
+}
 
 function createWindow() {
     mainWindow = new BrowserWindow({

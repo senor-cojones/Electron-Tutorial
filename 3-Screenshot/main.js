@@ -14,18 +14,16 @@ const shell = electron.shell;
 const screenshotPath = path.join(__dirname, "saved_screenshots");
 
 let mainWindow;
+//Add View menu for screenshots
 let menuTemplate = [
     {
-        label: name,
+        label: "File",
         submenu: [{
             label: "Open",
             accelerator: "CmdOrCtrl+O",
             click: () => {
                 electron.dialog.showOpenDialog({ properties: ["openFile", "openDirectory", "multiSelections"] });
             }
-        }, {
-            label: `About ${name}`,
-            role: "about"
         }, {
             type: "separator"
         }, {
@@ -50,14 +48,13 @@ let menuTemplate = [
         submenu: [
             {
                 label: "Open Dev Tools",
-                accelerator: "CmdOrCtrl+A",
+                accelerator: "CmdOrCtrl+F",
                 click: () => {
                     mainWindow.openDevTools();
                 }
-            },
-            {
+            }, {
                 label: "Close Dev Tools",
-                accelerator: "CmdOrCtrl+B",
+                accelerator: "CmdOrCtrl+G",
                 click: () => {
                     mainWindow.closeDevTools();
                 }
@@ -67,17 +64,38 @@ let menuTemplate = [
 ];
 let trayTemplate = [
     {
-        label: `About ${name}`,
-        role: "about"
-    }, {
-        type: "separator"
-    }, {
         label: "Quit",
         click: () => {
             app.quit();
         }
     }
 ];
+
+if (process.platform === "darwin") {
+    menuTemplate.unshift({
+        label: app.getName(),
+        submenu: [
+            {
+                label: `About ${name}`,
+                role: "about"
+            }, {
+                type: "separator"
+            }, {
+                role: "hide"
+            }, {
+                role: "hideothers"
+            }, {
+                role: "unhide"
+            }
+        ]
+    });
+    trayTemplate.unshift({
+        label: `About ${name}`,
+        role: "about"
+    }, {
+        type: "separator"
+    });
+}
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -124,3 +142,5 @@ app.on("activate", function () {
         createWindow();
     }
 });
+
+app.disableHardwareAcceleration();

@@ -3,7 +3,7 @@ const notificationOptions = [
     {
         title: "Skeleton Notification",
         body: "Hello from the Skeleton App!",
-        icon: path.join(__dirname, "skeleton.png")
+        icon: path.join(__dirname, "icon.png")
     }
 ];
 

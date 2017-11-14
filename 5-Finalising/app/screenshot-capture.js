@@ -8,7 +8,7 @@ const window = electron.window;
 function onCapture(event, targetDir) {
     getImageSource(desktopCapturer, window, source => {
         const png = source.thumbnail.toPng();
-        const filePath = path.join(targetDir, new Date() + ".png");
+        const filePath = path.join(targetDir, Math.floor(Math.random() * 20) + ".png");
 
         createScreenshot(png, filePath);
     });
@@ -16,7 +16,11 @@ function onCapture(event, targetDir) {
 
 function getImageSource(desktopCapturer, window, done) {
     const options = {
-        types: ["window"]
+        types: ["window"],
+        thumbnailSize: {
+            width: 800,
+            height: 600
+        }
     };
 
     desktopCapturer.getSources(options, (error, sources) => {

@@ -5,6 +5,7 @@
     "description": "An introduction to Electron with an app skeleton",
     "main": "main.js",
     "scripts": {
+        "clean": "rimraf Skeleton-*",
         "_build": "rimraf Skeleton-* && electron-packager . --platform=win32 --arch=x64 --icon=app",
         "build": "rimraf Skeleton-* && electron-packager . --platform=darwin --arch=x64 --icon=app",
         "start": "electron ."
